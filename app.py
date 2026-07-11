@@ -13,8 +13,6 @@ if "reporter_info" not in st.session_state:
 if "current_accident" not in st.session_state:
     st.session_state.current_accident = None
 
-# requirements.txt 에는 streamlit과 pandas만 남겨두시면 됩니다 (twilio 삭제 가능).
-
 def main():
     st.set_page_config(page_title="협력사 EHS 카톡 핫라인", page_icon="🚨", layout="centered")
 
@@ -85,7 +83,7 @@ def main():
                 f"■ 사고 유형: {acc_type}\n"
                 f"■ 발생 시간: {now_time}\n"
                 f"■ 협력 업체: {company}\n"
-                f"■ 최 초 신고자: {reporter} ({phone})\n\n"
+                f"■ 최초 신고자: {reporter} ({phone})\n\n"
                 f"※ 수신한 담당자는 즉시 3119 구조단 상황 전파 및 현장 조치를 가동해 주십시오."
             )
             
@@ -94,6 +92,7 @@ def main():
             kakaotalk_url = f"https://sharer.kakao.com/talk/friends/picker/link?message={encoded_message}"
             
             # 카카오톡 앱 실행 버튼 생성 (HTML 방식의 스타일 버튼 사용)
+            # 💡 수정된 부분: unsafe_allow_width=True 제거
             button_html = f"""
                 <a href="{kakaotalk_url}" target="_blank" style="text-decoration: none;">
                     <div style="
@@ -111,7 +110,7 @@ def main():
                     </div>
                 </a>
             """
-            st.markdown(button_html, unsafe_allow_width=True, unsafe_allow_html=True)
+            st.markdown(button_html, unsafe_allow_html=True)
             
             st.write("")
             st.caption("💡 카톡 전송 완료 후, 아래 [다음 단계] 버튼을 눌러 상세 현장 보고(2차/3차)를 등록해 주세요.")
